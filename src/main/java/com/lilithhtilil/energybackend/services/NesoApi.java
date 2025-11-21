@@ -16,7 +16,7 @@ public class NesoApi {
         this.objectMapper = objectMapper;
     }
 
-    public EnergyMixIntervals getGeneration(Date start, Date end){
+    public EnergyMixIntervals getGeneration(LocalDateTime start, LocalDateTime end){
         Map<String, Object> params = new HashMap<>();
         params.put("from", start);
         params.put("to", end);

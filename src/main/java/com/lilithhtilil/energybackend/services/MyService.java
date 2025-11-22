@@ -86,7 +86,34 @@ public class MyService {
                 sumWind = 0;
                 intervalCount = 0;
             }
+
         }
+        float cleanEnergy = sumBiomass
+                + sumNuclear
+                + sumHydro
+                + sumSolar
+                + sumWind;
+        float totalEnergy = sumBiomass
+                + sumCoal
+                + sumImports
+                + sumGas
+                + sumOther
+                + sumNuclear
+                + sumHydro
+                + sumSolar
+                + sumWind;
+        days.add(new EnergyMix.Day(
+                sumBiomass / intervalCount,
+                sumCoal / intervalCount,
+                sumImports / intervalCount,
+                sumGas / intervalCount,
+                sumOther / intervalCount,
+                sumNuclear / intervalCount,
+                sumHydro / intervalCount,
+                sumSolar / intervalCount,
+                sumWind / intervalCount,
+                cleanEnergy / totalEnergy
+        ));
         return new EnergyMix(start, days);
     }
 

@@ -13,25 +13,37 @@ public class EnergyMixDto {
 
     public static class Day {
         public float biomass;
+        public float coal;
+        public float imports;
+        public float gas;
+        public float other;
         public float nuclear;
         public float hydro;
-        public float wind;
         public float solar;
-        public float coal;
-        public float gas;
+        public float wind;
         public float avgCleanEnergy;
 
-        public Day(float biomass, float nuclear, float hydro,
-                   float wind, float solar, float coal,
-                   float gas, float avgCleanEnergy) {
+        public Day(float biomass,
+                   float coal,
+                   float imports,
+                   float gas,
+                   float other,
+                   float nuclear,
+                   float hydro,
+                   float solar,
+                   float wind,
+                   float avgCleanEnergy) {
             this.biomass = biomass;
+            this.coal = coal;
+            this.imports = imports;
+            this.gas = gas;
+            this.other = other;
             this.nuclear = nuclear;
             this.hydro = hydro;
-            this.wind = wind;
             this.solar = solar;
-            this.coal = coal;
-            this.gas = gas;
+            this.wind = wind;
             this.avgCleanEnergy = avgCleanEnergy;
         }
+
     }
 }

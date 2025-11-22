@@ -11,7 +11,12 @@ import java.util.List;
 public class MyService {
     public static final int INTERVALS_IN_DAY = 48;
 
-    public NesoApi nesoApi;
+    public final NesoApi nesoApi;
+
+    public MyService(NesoApi nesoApi) {
+        this.nesoApi = nesoApi;
+    }
+
 
     public EnergyMix getEnergyMix(LocalDateTime start) {
         start = start.truncatedTo(ChronoUnit.DAYS);

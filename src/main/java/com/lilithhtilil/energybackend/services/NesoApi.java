@@ -2,12 +2,16 @@ package com.lilithhtilil.energybackend.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lilithhtilil.energybackend.services.dto.GenerationDto;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+@Component
 public class NesoApi {
+    public static final DateTimeFormatter NESO_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm'Z'");
     public RestTemplate restTemplate;
     public ObjectMapper objectMapper;
 
@@ -31,13 +35,13 @@ public class NesoApi {
     private EnergyMixIntervals toDomain(GenerationDto value) {
         List<GenerationDto.DataItem> sortedData = new ArrayList<>(value.data);
         sortedData.sort((left, right) -> {
-            LocalDateTime leftDate = LocalDateTime.parse(left.from);
-            LocalDateTime rightDate = LocalDateTime.parse(right.from);
+            LocalDateTime leftDate = LocalDateTime.parse(left.from, NESO_DATE_TIME_FORMATTER);
+            LocalDateTime rightDate = LocalDateTime.parse(right.from, NESO_DATE_TIME_FORMATTER);
             return leftDate.compareTo(rightDate);
         });
 
         List<EnergyMixIntervals.Interval> intervals = new ArrayList<>();
-        LocalDateTime start = LocalDateTime.parse(sortedData.getFirst().from);
+        LocalDateTime start = LocalDateTime.parse(sortedData.getFirst().from, NESO_DATE_TIME_FORMATTER);
 
         for (GenerationDto.DataItem item : sortedData) {
             EnergyMixIntervals.Interval interval = new EnergyMixIntervals.Interval();

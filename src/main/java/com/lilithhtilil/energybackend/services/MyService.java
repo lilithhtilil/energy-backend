@@ -17,7 +17,6 @@ public class MyService {
         this.nesoApi = nesoApi;
     }
 
-
     public EnergyMix getEnergyMix(LocalDateTime start) {
         start = start.truncatedTo(ChronoUnit.DAYS);
         LocalDateTime end = start.plusDays(3).truncatedTo(ChronoUnit.DAYS);
@@ -117,4 +116,29 @@ public class MyService {
         return new EnergyMix(start, days);
     }
 
+    public ChargingInfo getChargingInfo(int timeFameHours){
+        LocalDateTime start = LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.DAYS);
+        LocalDateTime end = start.plusDays(2).truncatedTo(ChronoUnit.DAYS);
+        EnergyMixIntervals result = this.nesoApi.getGeneration(start.plusSeconds(1), end);
+
+        int intervalSumStart = 0;
+        float bigestSum = 0;
+        int timeFameInterval = timeFameHours * 2; // in 1 h are 2 intervals
+        for (int i = 0; i < result.intervals.size() - timeFameInterval; i++) {
+            float sum = 0;
+            for (int j = i; j < i + timeFameInterval; j++) {
+                sum += result.intervals.get(j).biomass
+                        + result.intervals.get(j).nuclear
+                        + result.intervals.get(j).hydro
+                        + result.intervals.get(j).wind
+                        + result.intervals.get(j).solar;
+            }
+            if (sum > bigestSum) {
+                bigestSum = sum;
+                intervalSumStart = i;
+            }
+        }
+        LocalDateTime chargingStart = start.plusMinutes(((long)(intervalSumStart))*30); // one interval = 30min
+        return new ChargingInfo(chargingStart, chargingStart.plusHours(timeFameHours), bigestSum/timeFameInterval);
+    }
 }

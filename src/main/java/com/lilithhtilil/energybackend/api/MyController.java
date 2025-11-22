@@ -5,9 +5,10 @@ import com.lilithhtilil.energybackend.api.dto.EnergyMixDto;
 import com.lilithhtilil.energybackend.services.ChargingInfo;
 import com.lilithhtilil.energybackend.services.EnergyMix;
 import com.lilithhtilil.energybackend.services.MyService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class MyController {
     @GetMapping(value = "/charging-info")
     public ChargingInfoDto getChargingInfo(@RequestParam Integer timeFrame) {
         if (timeFrame < 1 || timeFrame > 6) {
-            throw new IllegalArgumentException("Invalid time frame");
+            throw new ValidationException("Invalid time frame");
         }
 
         ChargingInfo chargingInfo = this.myService.getChargingInfo(timeFrame);
@@ -66,5 +67,17 @@ public class MyController {
                chargingInfo.endDateTime.toString(),
                chargingInfo.avgCleanEnergy);
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ValidationException.class)
+    public void handleValidationException() {}
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public void handleMethodArgumentTypeMismatchException() { }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public void handleMissingServletRequestParameterException() { }
 }
 

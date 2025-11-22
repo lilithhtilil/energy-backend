@@ -44,31 +44,31 @@ public class NesoApi {
             for (GenerationDto.DataItem.GenerationMixItem mixItem : item.generationmix){
                 switch (mixItem.fuel) {
                     case "biomass":
-                        interval.biomass = mixItem.perc;
+                        interval.biomass = mixItem.perc/100f;
                         break;
                     case "coal":
-                        interval.coal = mixItem.perc;
+                        interval.coal = mixItem.perc/100f;
                         break;
                     case "imports":
-                        interval.imports = mixItem.perc;
+                        interval.imports = mixItem.perc/100f;
                         break;
                     case "gas":
-                        interval.gas = mixItem.perc;
+                        interval.gas = mixItem.perc/100f;
                         break;
                     case "other":
-                        interval.other = mixItem.perc;
+                        interval.other = mixItem.perc/100f;
                         break;
                     case "nuclear":
-                        interval.nuclear = mixItem.perc;
+                        interval.nuclear = mixItem.perc/100f;
                         break;
                     case "hydro":
-                        interval.hydro = mixItem.perc;
+                        interval.hydro = mixItem.perc/100f;
                         break;
                     case "solar":
-                        interval.solar = mixItem.perc;
+                        interval.solar = mixItem.perc/100f;
                         break;
                     case "wind":
-                        interval.wind = mixItem.perc;
+                        interval.wind = mixItem.perc/100f;
                         break;
                     default:
                         break;

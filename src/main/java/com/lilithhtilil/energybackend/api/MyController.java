@@ -2,6 +2,7 @@ package com.lilithhtilil.energybackend.api;
 
 import com.lilithhtilil.energybackend.api.dto.ChargingInfoDto;
 import com.lilithhtilil.energybackend.api.dto.EnergyMixDto;
+import com.lilithhtilil.energybackend.services.ChargingInfo;
 import com.lilithhtilil.energybackend.services.EnergyMix;
 import com.lilithhtilil.energybackend.services.MyService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,9 +52,19 @@ public class MyController {
 
     @GetMapping(value = "/charging-info")
     public ChargingInfoDto getChargingInfo(@RequestParam Integer timeFrame) {
-        return new ChargingInfoDto(
-                "2025-11-20T10:00:00Z","2025-11-20T10:00:00Z", 0.4f
-        );
+        if (timeFrame < 1 || timeFrame > 6) {
+            throw new IllegalArgumentException("Invalid time frame");
+        }
+
+        ChargingInfo chargingInfo = this.myService.getChargingInfo(timeFrame);
+        return toDto(chargingInfo);
+    }
+
+    private ChargingInfoDto toDto(ChargingInfo chargingInfo) {
+       return new ChargingInfoDto(
+               chargingInfo.startDateTime.toString(),
+               chargingInfo.endDateTime.toString(),
+               chargingInfo.avgCleanEnergy);
     }
 }
 

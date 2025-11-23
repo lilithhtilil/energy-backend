@@ -23,7 +23,7 @@ public class MyController {
         this.myService = myService;
     }
 
-    @GetMapping("/energy-mix")
+    @GetMapping("/api/energy-mix")
     public EnergyMixDto getEnergyMix() {
         LocalDateTime start = LocalDateTime.now();
         EnergyMix energyMix = this.myService.getEnergyMix(start);
@@ -51,7 +51,7 @@ public class MyController {
         return new EnergyMixDto(energyMix.start.toString(), days);
     }
 
-    @GetMapping(value = "/charging-info")
+    @GetMapping(value = "/api/charging-info")
     public ChargingInfoDto getChargingInfo(@RequestParam Integer timeFrame) {
         if (timeFrame < 1 || timeFrame > 6) {
             throw new ValidationException("Invalid time frame");

@@ -116,8 +116,8 @@ public class MyService {
         return new EnergyMix(start, days);
     }
 
-    public ChargingInfo getChargingInfo(int timeFameHours) {
-        LocalDateTime start = LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.DAYS);
+    public ChargingInfo getChargingInfo(int timeFameHours, LocalDateTime start) {
+        start = start.plusDays(1).truncatedTo(ChronoUnit.DAYS);
         LocalDateTime end = start.plusDays(2).truncatedTo(ChronoUnit.DAYS);
         EnergyMixIntervals result = this.nesoApi.getGeneration(start.plusSeconds(1), end);
 

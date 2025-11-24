@@ -57,7 +57,8 @@ public class MyController {
             throw new ValidationException("Invalid time frame");
         }
 
-        ChargingInfo chargingInfo = this.myService.getChargingInfo(timeFrame);
+        LocalDateTime start = LocalDateTime.now();
+        ChargingInfo chargingInfo = this.myService.getChargingInfo(timeFrame, start);
         return toDto(chargingInfo);
     }
 

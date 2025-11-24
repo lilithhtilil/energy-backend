@@ -1,7 +1,10 @@
 package com.lilithhtilil.energybackend.services;
 
+import lombok.EqualsAndHashCode;
+
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode
 public class ChargingInfo {
     public LocalDateTime startDateTime;
     public LocalDateTime endDateTime;
